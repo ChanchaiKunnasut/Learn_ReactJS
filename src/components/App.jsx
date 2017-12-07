@@ -3,6 +3,7 @@ import logo from '../img/logo.svg';
 import './App.css';
 import PropTypes from 'prop-types';
 // import JsBarcode from 'jsbarcode';
+import mysql from 'mysql';
 
 class App extends React.Component {
   render() {
@@ -15,6 +16,7 @@ class App extends React.Component {
             <Header />
             <Content />
             {/* <Barcode /> */}
+            <Database />
           </div>
         </div>
       </div>
@@ -40,6 +42,41 @@ class Header extends React.Component {
 //     )
 //   }
 // }
+
+class Database extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { database: props.initialArray }
+  }
+  connectToSQL() {
+    const connection = mysql.createConnection({
+      host: 'localhost',
+      user: 'root@localhost',
+      database: 'react_db'
+    });
+    connection.connect();
+
+    connection.query('SELECT 1+1 AS solution', function (error, results, fields) {
+      if (error) throw error;
+      console.log(results[0].solution);
+      const value = results[0].solution;
+      this.state.database.push({ list: value })
+      this.setState({ database: this.state.database })
+    });
+    connection.end()
+  }
+  render() {
+    return (
+      <div onLoad={() => this.connectToSQL()}>
+        <h2>database</h2>
+        <li>
+          <h2>1</h2>
+          {this.state.database}
+      </li>
+      </div>
+    )
+  }
+}
 class Content extends React.Component {
   constructor(props) {
     super(props)
@@ -79,5 +116,7 @@ class TableRow extends React.Component {
     )
   }
 }
+
+// Database.propTypes = { database: PropTypes.string.isRequired }
 TableRow.propTypes = { data: PropTypes.string.isRequired }
 export default App;
