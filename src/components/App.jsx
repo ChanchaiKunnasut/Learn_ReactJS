@@ -1,7 +1,8 @@
 import React from 'react';
 import logo from '../img/logo.svg';
 import './App.css';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
+// import JsBarcode from 'jsbarcode';
 
 class App extends React.Component {
   render() {
@@ -13,6 +14,7 @@ class App extends React.Component {
             <h2>React Component</h2>
             <Header />
             <Content />
+            {/* <Barcode /> */}
           </div>
         </div>
       </div>
@@ -29,6 +31,15 @@ class Header extends React.Component {
     )
   }
 }
+// class Barcode extends React.Component {
+//   render() {
+//     return (
+//       <div>
+//         <img src={this.image} alt='barcode' id="barcode"/>
+//       </div>
+//     )
+//   }
+// }
 class Content extends React.Component {
   constructor(props) {
     super(props)
@@ -55,8 +66,8 @@ class Content extends React.Component {
   }
 }
 Content.propTypes = { initialArray: PropTypes.array }
-//Content.defaultProp = { initialArray: [{list: 'make1'}, {list: 'make2'}]}
-//ค่าเริ่มต้นในการ props 
+//Content.defaultProp = {initialArray: [{list: 'make1'}, {list: 'make2'}]}
+//ค่าเริ่มต้นในการ props
 Content.defaultProps = { initialArray: [] }
 
 class TableRow extends React.Component {
